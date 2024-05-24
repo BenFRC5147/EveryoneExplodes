@@ -61,8 +61,8 @@ namespace EveryoneExplodes
             { RoleTypeId.ChaosMarauder, 1 },
             { RoleTypeId.ChaosRepressor, 1 }
         };
-        [Description("Friendly Fire Damage done to the teammates of the exploded")]
-        public Dictionary<RoleTypeId, float> FriendlyFireDamage { get; set; } = new Dictionary<RoleTypeId, float>
+        [Description("SCP Damage multiplier")]
+        public Dictionary<RoleTypeId, float> SCPDamageMultiplier { get; set; } = new Dictionary<RoleTypeId, float>
         {
             { RoleTypeId.Scp173, 0.5f },
             { RoleTypeId.ClassD, 0.5f },

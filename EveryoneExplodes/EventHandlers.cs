@@ -26,12 +26,12 @@ namespace EveryoneExplodes
             Dictionary<RoleTypeId, float> oddsConfig = Plugin.Instance.Config.ChancesOfExploding;
             Dictionary<RoleTypeId, int> magnitudeConfig = Plugin.Instance.Config.Magnitude;
             Dictionary<RoleTypeId, float> fuseTimeConfig = Plugin.Instance.Config.FuseTime;
-            Dictionary<RoleTypeId, float> friendlyFireDamageConfig = Plugin.Instance.Config.FriendlyFireDamage;
+            Dictionary<RoleTypeId, float> scpDamageMultiplierConfig = Plugin.Instance.Config.SCPDamageMultiplier;
 
             oddsConfig.TryGetValue(ev.TargetOldRole, out float odds);
             magnitudeConfig.TryGetValue(ev.TargetOldRole, out int magnitude);
             fuseTimeConfig.TryGetValue(ev.TargetOldRole, out float fuseTime);
-            friendlyFireDamageConfig.TryGetValue(ev.TargetOldRole, out float friendlyFireDamage);
+            scpDamageMultiplierConfig.TryGetValue(ev.TargetOldRole, out float scpDamageMultiplier);
 
             Log.Debug("EFE: Checking if the event should occur based on odds");
 
@@ -51,8 +51,8 @@ namespace EveryoneExplodes
                     ExplosiveGrenade grenade = (ExplosiveGrenade)Item.Create(ItemType.GrenadeHE);
                     Log.Debug($"EFE: Setting fuse time of {fuseTime}");
                     grenade.FuseTime = fuseTime;
-                    Log.Debug($"EFE: Setting the SCP Damage Multiplier (friendly fire) to {friendlyFireDamage * 3}");
-                    grenade.ScpDamageMultiplier = friendlyFireDamage * 3;
+                    Log.Debug($"EFE: Setting the SCP Damage Multiplier to {scpDamageMultiplier * 3}");
+                    grenade.ScpDamageMultiplier = scpDamageMultiplier * 3;
                     Log.Debug($"EFE: Spawning grenade at {PlayerDeathLocation}");
                     grenade.SpawnActive(PlayerDeathLocation);
                 }
