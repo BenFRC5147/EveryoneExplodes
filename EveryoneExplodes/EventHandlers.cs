@@ -4,6 +4,8 @@ using Exiled.API.Features.Items;
 using Exiled.API.Features.Roles;
 using Exiled.Events;
 using Exiled.Events.EventArgs.Player;
+using Exiled.Events.EventArgs.Scp079;
+using InventorySystem.Items.Autosync;
 using PlayerRoles;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -17,9 +19,17 @@ namespace EveryoneExplodes
         public EventHandlers(Plugin plugin) => this.plugin = plugin;
         public Vector3 PlayerDeathLocation;
 
+        public void LastCamera(ChangingCameraEventArgs ev)
+        {
+            Plugin.Instance.lastCamera = ev.Camera;
+        }
         public void OnPlayerDying(DyingEventArgs ev)
         {
             PlayerDeathLocation = ev.Player.Position;
+            if (ev.Player.Role == RoleTypeId.Scp079)
+            {
+                PlayerDeathLocation = Plugin.Instance.lastCamera.Position;
+            }
         }
         public void OnPlayerDeath(DiedEventArgs ev)
         {
@@ -39,11 +49,11 @@ namespace EveryoneExplodes
             System.Random random = new System.Random();
             double chance = random.NextDouble();
 
+
             // Check if the random number is less than the odds
             if (chance < odds)
             {
                 Log.Debug($"EFE: Event triggered with chance {chance * 100}%, odds {odds * 100}%.");
-
                 Log.Debug("EFE: Getting the amount of grenades specified in the magnitude config");
                 for (int i = 0; i < magnitude; i++)
                 {
